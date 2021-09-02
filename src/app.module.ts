@@ -13,7 +13,7 @@ import { JwtMiddleware } from './jwt/jwt.middleware';
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
-      database: 'db.sqlite3',
+      database: process.env.NODE_ENV === 'test' ? 'test.sqlite3' : 'db.sqlite3',
       synchronize: true,
       logging: true,
       entities: [Podcast, Episode, User],
