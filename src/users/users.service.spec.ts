@@ -166,7 +166,7 @@ describe('UsersService', () => {
       const result = await usersService.login(loginArgs);
 
       expect(jwtService.sign).toHaveBeenCalledTimes(1);
-      expect(jwtService.sign).toHaveBeenCalledWith({ id: expect.any(Number) });
+      expect(jwtService.sign).toHaveBeenCalledWith(expect.any(Number));
 
       expect(result).toEqual({
         ok: true,
