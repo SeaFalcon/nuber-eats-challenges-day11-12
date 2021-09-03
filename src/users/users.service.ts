@@ -26,14 +26,17 @@ export class UsersService {
   }: CreateAccountInput): Promise<CreateAccountOutput> {
     try {
       const exists = await this.users.findOne({ email });
+
       if (exists) {
         return { ok: false, error: `There is a user with that email already` };
       }
+
       const user = this.users.create({
         email,
         password,
         role,
       });
+
       await this.users.save(user);
 
       return {
@@ -53,10 +56,13 @@ export class UsersService {
         { email },
         { select: ['id', 'password'] },
       );
+
       if (!user) {
         return { ok: false, error: 'User not found' };
       }
+
       const passwordCorrect = await user.checkPassword(password);
+
       if (!passwordCorrect) {
         return {
           ok: false,
@@ -99,13 +105,17 @@ export class UsersService {
   ): Promise<EditProfileOutput> {
     try {
       const user = await this.users.findOne(userId);
+
       if (email) {
         user.email = email;
       }
+
       if (password) {
         user.password = password;
       }
+
       await this.users.save(user);
+
       return {
         ok: true,
       };
